@@ -4,5 +4,6 @@
     {
         void OpenFile(string fileName);
         string ReadLine();
+        bool IsEndOfFile();
     }
 }

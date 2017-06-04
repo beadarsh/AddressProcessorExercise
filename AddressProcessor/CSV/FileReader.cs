@@ -28,6 +28,12 @@ namespace AddressProcessing.CSV
             return _textReader.ReadLine();
         }
 
+        public bool IsEndOfFile()
+        {
+            bool isThereCharacterToRead = _textReader.Peek() > 0;
+            return !isThereCharacterToRead;
+        }
+
         public void Dispose()
         {
             _textReader?.Dispose();

@@ -113,6 +113,60 @@ namespace AddressProcessing.Unit.Tests
 
         }
 
+        [Test]
+        public void IsEndOfFile_ForAFileWithUserDetails_ReturnsFalse()
+        {
+            //Arrange
+            string textInFile = "word1 \t word2\nword3 \t word4";
+            Mock<IFileStore> fileStoreMoq = GenerateMockStreamWithText(textInFile);
+            IFileReader fileReader = new FileReader(fileStoreMoq.Object);
+            //Act
+
+            fileReader.OpenFile("fileName");
+            bool isEndOfFile = fileReader.IsEndOfFile();
+
+            //Assert
+            Assert.IsFalse(isEndOfFile);
+        }
+
+        [Test]
+        public void IsEndOfFile_ForAFileWithOneLineOfUserDetails_AttemptingAfterReadLineReturnsTrue()
+        {
+            //Arrange
+            string textInFile = "word1 \t word";
+            Mock<IFileStore> fileStoreMoq = GenerateMockStreamWithText(textInFile);
+            IFileReader fileReader = new FileReader(fileStoreMoq.Object);
+
+            //Act
+
+            fileReader.OpenFile("fileName");
+            fileReader.ReadLine();
+            bool isEndOfFile = fileReader.IsEndOfFile();
+
+            //Assert
+            Assert.IsTrue(isEndOfFile);
+        }
+
+        [Test]
+        public void IsEndOfFile_ForAFileWithTwoLineOfUserDetails_AttemptingAfterTwoReadLineReturnsTrue()
+        {
+            //Arrange
+            string textInFile = "word1 \t word\nword3 \t word4";
+            Mock<IFileStore> fileStoreMoq = GenerateMockStreamWithText(textInFile);
+            IFileReader fileReader = new FileReader(fileStoreMoq.Object);
+
+            //Act
+
+            fileReader.OpenFile("fileName");
+            fileReader.ReadLine();
+            fileReader.ReadLine();
+            bool isEndOfFile = fileReader.IsEndOfFile();
+
+            //Assert
+            Assert.IsTrue(isEndOfFile);
+        }
+
+
         private static Mock<IFileStore> GenerateMockStreamWithText(string textInFile)
         {
             var fileStoreMoq = new Mock<IFileStore>();
