@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,31 +45,5 @@ namespace AddressProcessing.Unit.Tests
 
             Assert.IsTrue(fileReader is IDisposable);
         }
-    }
-
-    public class FileWriter : IFileWriter, IDisposable
-    {
-        private IFileStore _fileStore;
-        private TextWriter _textWriter;
-
-        public FileWriter(IFileStore fileStore)
-        {
-            _fileStore = fileStore ?? throw new ArgumentException("the file store cannot be null");
-        }
-
-        public void CreateFile(string fileName)
-        {
-            _textWriter = _fileStore.GetWriteStream(fileName);
-        }
-
-        public void Dispose()
-        {
-            _textWriter?.Dispose();
-        }
-    }
-
-    public interface IFileWriter
-    {
-        void CreateFile(string fileName);
     }
 }
