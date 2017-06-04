@@ -4,13 +4,32 @@ using System.IO;
 namespace AddressProcessing.CSV
 {
     /*
-        1) List three to five key concerns with this implementation that you would discuss with the junior developer. 
-
-        Please leave the rest of this file as it is so we can discuss your concerns during the next stage of the interview process.
+       // 1) List three to five key concerns with this implementation that you would discuss with the junior developer. 
+       // Please leave the rest of this file as it is so we can discuss your concerns during the next stage of the interview process.
         
-        *)
-        *)
-        *)
+         ========================================================================================================================
+
+          First thing that strikes me is that the 'CSVReaderWriterForAnnotation' is that it does not seem to adhere
+          the single reponsiblity principle and could possibly have more than one reason to change? 
+          We should think of reasons why the class could change (ex: what if the structure in csv file changes and logic changes
+          What if we change the way we read and want to implement caching for the data?
+          or would there be a a need to write to encrypted stream for security reasons? Does not promote reusablity.
+
+          ========================================================================================================================
+          
+          The class is not unit testable as it seems to have an dependencies to the stream. Unit tests give you the confidence to
+          make your changes quickly and make sure you have not introduced bugs
+          
+          ========================================================================================================================
+                   
+           One more issue is the class does not seem to follow the Idisposable pattern as it is the responsibility of the class
+           to dispose unmanaged resource Irrespsctive when the object is out of scope and not depend on if the user invokes
+           close method (Exceptions?).         
+         
+          ========================================================================================================================
+          
+           I see method names confusing and are not self descriptive. ex: what is the point of the Read method returning bool value.
+           Also i am not sure all the methods are needed? Prefer TDD that supports YAGNI principle.        
     */
 
     public class CSVReaderWriterForAnnotation
