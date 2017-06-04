@@ -9,24 +9,28 @@ namespace AddressProcessing.CSV
            Assume this code is in production and backwards compatibility must be maintained.
     */
 
+    /// <summary>
+    /// Needs backward compatability, Let this class actjust as an adapter to the tested reader and writer classes
+    /// </summary>
     public class CSVReaderWriter
     {
         private readonly IFileReader _fileReader;
         private readonly IFileWriter _fileWriter;
+        private readonly IUserDetailsMapper _userDetailsMapper;
+        public const string Delimiter = "\t";
 
         public CSVReaderWriter()
         {
             IFileStore fileStore = new FileStore();
             _fileReader = new FileReader(fileStore);
             _fileWriter = new FileWriter(fileStore);
+            _userDetailsMapper = new UserDetailsMapper();
         }
 
         [Flags]
         public enum Mode { Read = 1, Write = 2 };
         
-        /// <summary>
-        /// Needs backward compatability, Let this class act as an adapter to the implemented reader and writer
-        /// </summary>
+       
         public void Open(string fileName, Mode mode)
         {
             if (mode == Mode.Read)
@@ -42,76 +46,38 @@ namespace AddressProcessing.CSV
         {
 
             columns = columns ?? throw new ArgumentException("the column text to be written to file cannot be null");
-            var textToWriteToFile = String.Join("\t", columns);;
-            _fileWriter.WriteLine(textToWriteToFile);
+
+            var textOfColumnsWithSeparater = String.Join(Delimiter, columns);;
+
+            _fileWriter.WriteLine(textOfColumnsWithSeparater);
         }
 
         public bool Read(string column1, string column2)
         {
-            const int FIRST_COLUMN = 0;
-            const int SECOND_COLUMN = 1;
-
-            string line;
-            string[] columns;
-
-            char[] separator = { '\t' };
-
-            line = ReadLine();
-            columns = line.Split(separator);
-
-            if (columns.Length == 0)
-            {
-                column1 = null;
-                column2 = null;
-
-                return false;
-            }
-            else
-            {
-                column1 = columns[FIRST_COLUMN];
-                column2 = columns[SECOND_COLUMN];
-
-                return true;
-            }
+            return _fileReader.IsEndOfFile();
         }
 
-        public bool Read(out string column1, out string column2)
+        public bool Read(out string userName, out string userContactDetails)
         {
-            const int FIRST_COLUMN = 0;
-            const int SECOND_COLUMN = 1;
-
-            string line;
-            string[] columns;
-
-            char[] separator = { '\t' };
-
-            line = ReadLine();
-
-            if (line == null)
+            if (_fileReader.IsEndOfFile())
             {
-                column1 = null;
-                column2 = null;
-
+                userName = null;
+                userContactDetails = null;
                 return false;
             }
 
-            columns = line.Split(separator);
+            var userDetails = _fileReader.ReadLine();
+            
+            _userDetailsMapper.MapUserDataFieldsFromUserDetailsText
+                (out userName,
+                out userContactDetails,
+                userDetails,
+                Delimiter);
 
-            if (columns.Length == 0)
-            {
-                column1 = null;
-                column2 = null;
-
-                return false;
-            } 
-            else
-            {
-                column1 = columns[FIRST_COLUMN];
-                column2 = columns[SECOND_COLUMN];
-
-                return true;
-            }
+            return true;
         }
+
+       
 
         private void WriteLine(string line)
         {

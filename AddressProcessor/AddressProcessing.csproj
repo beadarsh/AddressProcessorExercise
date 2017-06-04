@@ -63,6 +63,8 @@
     <Compile Include="CSV\IFileReader.cs" />
     <Compile Include="CSV\IFileStore.cs" />
     <Compile Include="CSV\IFileWriter.cs" />
+    <Compile Include="CSV\IUserDetailsMapper.cs" />
+    <Compile Include="CSV\UserDetailsMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Address\v1\IMailShot.cs" />
     <Compile Include="Address\v2\IMailShot.cs" />
