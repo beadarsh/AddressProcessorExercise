@@ -48,7 +48,7 @@ namespace AddressProcessing.Unit.Tests
         }
 
         [Test]
-        public void ReadLine_WhenTheReader_ReturnsUserDetailsInAString()
+        public void ReadLine_WhenTheFileHasUserDetails_ReturnsUserDetailsInAString()
         {
             //Arrange
             string textInFile = "word1 \t word2";

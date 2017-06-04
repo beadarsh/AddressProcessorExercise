@@ -19,6 +19,16 @@ namespace AddressProcessing.Unit.Tests
             _textWriter = _fileStore.GetWriteStream(fileName);
         }
 
+        public void WriteLine(string text)
+        {
+            if (_textWriter == null)
+            {
+                throw new Exception("The text writer is null. Invoke CreateFile before calling this method.");
+            }
+            _textWriter.WriteLine(text);
+            _textWriter.Flush();
+        }
+
         public void Dispose()
         {
             _textWriter?.Dispose();
