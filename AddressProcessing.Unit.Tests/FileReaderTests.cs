@@ -27,7 +27,7 @@ namespace AddressProcessing.Unit.Tests
             fileReader.OpenFile(fileName);
 
             //Assert
-            fileStoreMoq.Verify(x => x.GetStream(fileName));
+            fileStoreMoq.Verify(x => x.GetReadStream(fileName));
         }
 
         [Test]
@@ -173,7 +173,7 @@ namespace AddressProcessing.Unit.Tests
             UTF8Encoding encoding = new UTF8Encoding();
             MemoryStream memoryStream = new MemoryStream(encoding.GetBytes(textInFile));
             StreamReader reader = new StreamReader(memoryStream);
-            fileStoreMoq.Setup(fs => fs.GetStream(It.IsAny<string>())).Returns(() => reader);
+            fileStoreMoq.Setup(fs => fs.GetReadStream(It.IsAny<string>())).Returns(() => reader);
             return fileStoreMoq;
         }
     }

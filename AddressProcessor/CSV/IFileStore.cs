@@ -4,6 +4,7 @@ namespace AddressProcessing.CSV
 {
     public interface IFileStore
     {
-        TextReader GetStream(string fileName);
+        TextReader GetReadStream(string fileName);
+        TextWriter GetWriteStream(string fileName);
     }
 }

@@ -15,7 +15,7 @@ namespace AddressProcessing.CSV
 
         public void OpenFile(string fileName)
         {
-            _textReader = _fileStore.GetStream(fileName);
+            _textReader = _fileStore.GetReadStream(fileName);
         }
 
         public string ReadLine()
