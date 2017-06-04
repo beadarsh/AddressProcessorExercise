@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using AddressProcessing.Unit.Tests;
 
 namespace AddressProcessing.CSV
 {
@@ -54,7 +52,7 @@ namespace AddressProcessing.CSV
 
         public bool Read(string column1, string column2)
         {
-            return _fileReader.IsEndOfFile();
+            return !_fileReader.IsEndOfFile();
         }
 
         public bool Read(out string userName, out string userContactDetails)

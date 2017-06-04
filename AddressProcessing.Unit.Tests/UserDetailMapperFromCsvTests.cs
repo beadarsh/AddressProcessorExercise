@@ -1,10 +1,5 @@
-﻿using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using NUnit.Framework;
 using AddressProcessing.CSV;
-using Microsoft.SqlServer.Server;
-using NUnit.Framework;
-using Moq;
 
 namespace AddressProcessing.Unit.Tests
 {
@@ -20,7 +15,7 @@ namespace AddressProcessing.Unit.Tests
             string userContactDetails;
             string userDetails = "userName\tuserContactDetails";
 
-            mapper.GetUserDetailFieldsFromCsvFileText(out userName, out userContactDetails, userDetails, "\t");
+            mapper.MapUserDataFieldsFromUserDetailsText(out userName, out userContactDetails, userDetails, "\t");
 
             //Assert
             Assert.AreEqual("userName",userName);
@@ -37,7 +32,7 @@ namespace AddressProcessing.Unit.Tests
             string userContactDetails;
             string userDetails = "userName";
 
-            mapper.GetUserDetailFieldsFromCsvFileText(out userName, out userContactDetails, userDetails, "\t");
+            mapper.MapUserDataFieldsFromUserDetailsText(out userName, out userContactDetails, userDetails, "\t");
 
             //Assert
             Assert.AreEqual("userName", userName);

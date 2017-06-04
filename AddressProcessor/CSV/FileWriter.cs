@@ -1,8 +1,7 @@
 using System;
 using System.IO;
-using AddressProcessing.CSV;
 
-namespace AddressProcessing.Unit.Tests
+namespace AddressProcessing.CSV
 {
     public class FileWriter : IFileWriter, IDisposable
     {

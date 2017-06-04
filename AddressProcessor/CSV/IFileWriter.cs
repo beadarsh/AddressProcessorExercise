@@ -1,6 +1,6 @@
 using System;
 
-namespace AddressProcessing.Unit.Tests
+namespace AddressProcessing.CSV
 {
     public interface IFileWriter: IDisposable
     {
