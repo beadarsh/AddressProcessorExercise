@@ -18,6 +18,11 @@ namespace AddressProcessing.CSV
             _textReader = _fileStore.GetStream(fileName);
         }
 
+        public string ReadLine()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Dispose()
         {
             _textReader?.Dispose();
