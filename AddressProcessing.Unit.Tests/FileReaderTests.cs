@@ -28,6 +28,23 @@ namespace AddressProcessing.Unit.Tests
             fileStore.Verify(x => x.GetStream(fileName));
         }
 
+        [Test]
+        public void OpenFile_WithANullFileStore_ThrowsInvalidArgumentException()
+        {
+            //Assert
+            Assert.Throws<ArgumentException>(() => new FileReader(null));
+        }
+
+        [Test]
+        public void FileReader_IsOfTypeDisposable()
+        {
+            //Arrange
+            var fileStore = new Mock<IFileStore>();
+            IFileReader fileReader = new FileReader(fileStore.Object);
+
+            Assert.IsTrue(fileReader is IDisposable);
+        }
+
         //UTF8Encoding encoding = new UTF8Encoding();
         //encoding.GetBytes()
         //MemoryStream memoryStream = new MemoryStream();
