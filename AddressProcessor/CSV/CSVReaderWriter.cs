@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using AddressProcessing.Unit.Tests;
 
 namespace AddressProcessing.CSV
 {
@@ -10,43 +11,39 @@ namespace AddressProcessing.CSV
 
     public class CSVReaderWriter
     {
-        private StreamReader _readerStream = null;
-        private StreamWriter _writerStream = null;
+        private readonly IFileReader _fileReader;
+        private readonly IFileWriter _fileWriter;
+
+        public CSVReaderWriter()
+        {
+            IFileStore fileStore = new FileStore();
+            _fileReader = new FileReader(fileStore);
+            _fileWriter = new FileWriter(fileStore);
+        }
 
         [Flags]
         public enum Mode { Read = 1, Write = 2 };
-
+        
+        /// <summary>
+        /// Needs backward compatability, Let this class act as an adapter to the implemented reader and writer
+        /// </summary>
         public void Open(string fileName, Mode mode)
         {
             if (mode == Mode.Read)
             {
-                _readerStream = File.OpenText(fileName);
+                _fileReader.OpenFile(fileName);
+                return;
             }
-            else if (mode == Mode.Write)
-            {
-                FileInfo fileInfo = new FileInfo(fileName);
-                _writerStream = fileInfo.CreateText();
-            }
-            else
-            {
-                throw new Exception("Unknown file mode for " + fileName);
-            }
+            
+            _fileWriter.CreateFile(fileName);
         }
 
         public void Write(params string[] columns)
         {
-            string outPut = "";
 
-            for (int i = 0; i < columns.Length; i++)
-            {
-                outPut += columns[i];
-                if ((columns.Length - 1) != i)
-                {
-                    outPut += "\t";
-                }
-            }
-
-            WriteLine(outPut);
+            columns = columns ?? throw new ArgumentException("the column text to be written to file cannot be null");
+            var textToWriteToFile = String.Join("\t", columns);;
+            _fileWriter.WriteLine(textToWriteToFile);
         }
 
         public bool Read(string column1, string column2)
@@ -118,25 +115,18 @@ namespace AddressProcessing.CSV
 
         private void WriteLine(string line)
         {
-            _writerStream.WriteLine(line);
+            _fileWriter.WriteLine(line);
         }
 
         private string ReadLine()
         {
-            return _readerStream.ReadLine();
+            return _fileReader.ReadLine();
         }
 
         public void Close()
         {
-            if (_writerStream != null)
-            {
-                _writerStream.Close();
-            }
-
-            if (_readerStream != null)
-            {
-                _readerStream.Close();
-            }
+            _fileWriter?.Dispose();
+            _fileReader?.Dispose();
         }
     }
 }

@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CSVReaderWriterTests.cs" />
     <Compile Include="FileReaderTests.cs" />
     <Compile Include="FileWriterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

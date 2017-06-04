@@ -72,9 +72,8 @@ namespace AddressProcessing.Unit.Tests
             IFileWriter fileWriter = new FileWriter(fileStoreMoq.Object);
 
             //Act
-            fileWriter.CreateFile("sasa");
+            fileWriter.CreateFile("fileName");
             fileWriter.WriteLine(textForFile);
-            // convert to string
             string fileData = GetTextInFile();
 
             //Assert

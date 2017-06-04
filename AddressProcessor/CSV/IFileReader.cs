@@ -1,6 +1,8 @@
-﻿namespace AddressProcessing.CSV
+﻿using System;
+
+namespace AddressProcessing.CSV
 {
-    public interface IFileReader
+    public interface IFileReader: IDisposable
     {
         void OpenFile(string fileName);
         string ReadLine();
