@@ -2,7 +2,7 @@
 {
     public interface IFileReader
     {
-        void GetStream(string fileName);
+        void OpenFile(string fileName);
         string ReadLine();
     }
 }

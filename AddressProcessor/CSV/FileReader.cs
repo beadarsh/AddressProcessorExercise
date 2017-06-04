@@ -13,14 +13,19 @@ namespace AddressProcessing.CSV
             _fileStore = fileStore ?? throw new ArgumentException("the file store cannot be null");
         }
 
-        public void GetStream(string fileName)
+        public void OpenFile(string fileName)
         {
             _textReader = _fileStore.GetStream(fileName);
         }
 
         public string ReadLine()
         {
-            throw new NotImplementedException();
+            if(_textReader == null)
+            {
+                throw new Exception("The text reader is null. Invoke get OpenFile before calling this method.");
+            }
+
+            return _textReader.ReadLine();
         }
 
         public void Dispose()

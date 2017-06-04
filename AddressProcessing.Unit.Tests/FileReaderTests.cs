@@ -24,7 +24,7 @@ namespace AddressProcessing.Unit.Tests
             IFileReader fileReader = new FileReader(fileStoreMoq.Object);
 
             //Act
-            fileReader.GetStream(fileName);
+            fileReader.OpenFile(fileName);
 
             //Assert
             fileStoreMoq.Verify(x => x.GetStream(fileName));
@@ -48,7 +48,38 @@ namespace AddressProcessing.Unit.Tests
         }
 
         [Test]
-        public void ReadLine_ForAFileWithUserDetails_ReturnsUserDetailsInAString()
+        public void ReadLine_WhenTheReader_ReturnsUserDetailsInAString()
+        {
+            //Arrange
+            string textInFile = "word1 \t word2";
+            var fileStoreMoq = GenerateMockStreamWithText(textInFile);
+            IFileReader fileReader = new FileReader(fileStoreMoq.Object); ;
+
+            //Act
+
+            string result = fileReader.ReadLine();
+
+            //Assert
+            Assert.AreEqual(textInFile, result);
+
+        }
+
+        [Test]
+        public void ReadLine_WhenUsedWithoutCallingOpenFile_ThrowsException()
+        {
+            //Arrange
+            string textInFile = "word1 \t word2";
+            var fileStoreMoq = GenerateMockStreamWithText(textInFile);
+            IFileReader fileReader = new FileReader(fileStoreMoq.Object); ;
+            
+
+            //Assert
+            Assert.Throws<Exception>(() => fileReader.ReadLine());
+
+        }
+
+        [Test]
+        public void ReadLine_ForAFileWithUserDetails_ReturnsUserDetails()
         {
             //Arrange
             string textInFile = "word1 \t word2";
@@ -56,11 +87,29 @@ namespace AddressProcessing.Unit.Tests
             IFileReader fileReader = new FileReader(fileStoreMoq.Object);;
 
             //Act
-
+            fileReader.OpenFile("testFile");
             string result = fileReader.ReadLine();
 
             //Assert
             Assert.AreEqual(textInFile,result);
+
+        }
+
+        [Test]
+        public void ReadLine_ForAFileWithTwoUserDetailsInEachLine_ReturnsUserDetailsForTwo()
+        {
+            //Arrange
+            string textInFile = "word1 \t word2\nword3 \t word4";
+            var fileStoreMoq = GenerateMockStreamWithText(textInFile);
+            IFileReader fileReader = new FileReader(fileStoreMoq.Object); ;
+
+            //Act
+            fileReader.OpenFile("testFile");
+            string result1 = fileReader.ReadLine();
+            string result2 = fileReader.ReadLine();
+            //Assert
+            Assert.AreEqual("word1 \t word2", result1);
+            Assert.AreEqual("word3 \t word4", result2);
 
         }
 
