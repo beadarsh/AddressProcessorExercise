@@ -6,6 +6,9 @@ using NUnit.Framework;
 
 namespace Csv.Tests
 {
+    /// <summary>
+    /// Add integration tests to read from csv file
+    /// </summary>
     [TestFixture]
     public class CSVReaderWriterTests
     {
