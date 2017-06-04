@@ -9,12 +9,28 @@ using NUnit.Framework;
 namespace AddressProcessing.Unit.Tests
 {
     [TestFixture]
-    public class Class1
+    public class FilReaderTests
     {
         [Test]
-        public void Test()
+        public void OpenFile_UsingAFileStore_AttemptsToGetATextReader()
         {
-            int x = 10;
+            IFileReader fileReader = new FileReader(new FileStore());
         }
+    }
+
+    public class FileStore
+    {
+    }
+
+    public class FileReader : IFileReader
+    {
+        public FileReader(FileStore fileStore)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public interface IFileReader
+    {
     }
 }
