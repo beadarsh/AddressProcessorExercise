@@ -1,4 +1,4 @@
-﻿namespace AddressProcessing.Unit.Tests
+﻿namespace AddressProcessing.CSV
 {
     public interface IFileReader
     {

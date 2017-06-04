@@ -51,10 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileReaderTests.cs" />
-    <Compile Include="FileReader.cs" />
-    <Compile Include="FileStore.cs" />
-    <Compile Include="IFileReader.cs" />
-    <Compile Include="IFileStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

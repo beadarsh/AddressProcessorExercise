@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace AddressProcessing.Unit.Tests
+namespace AddressProcessing.CSV
 {
     public class FileReader : IFileReader
     {
